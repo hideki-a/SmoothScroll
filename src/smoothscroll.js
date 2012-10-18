@@ -8,11 +8,16 @@
 /*jslint browser: true, eqeq: false, nomen: true, plusplus: false, maxerr: 100, indent: 4 */
 (function (window, document) {
     "use strict";
+    var stack = [];
+
     function addEvent(elem, type, listener, useCapture) {
         if (elem.addEventListener) {
             elem.addEventListener(type, listener, useCapture);
         } else if (elem.attachEvent) {
             elem.attachEvent("on" + type, listener);
+        }
+        if (type !== "unload") {
+            stack.push([elem, type, listener, useCapture]);
         }
     }
 
@@ -20,7 +25,7 @@
         if (elem.removeEventListener) {
             elem.removeEventListener(type, listener, useCapture);
         } else if (elem.dettachEvent) {
-            elem.dettachEvent("on" + type, listener);
+            elem.detachEvent("on" + type, listener);
         }
     }
 
@@ -105,6 +110,14 @@
                 instances[i] = new SmoothScroll(anchors[i]);
                 instances[i].init();
             }
+        }
+    }, false);
+
+    addEvent(window, "unload", function () {
+        var s,
+            nStack = stack.length;
+        for (s = 0; s < nStack; s += 1) {
+            removeEvent.apply(window.Event, stack[s]);
         }
     }, false);
 }(window, document));
