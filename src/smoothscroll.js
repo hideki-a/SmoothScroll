@@ -1,6 +1,6 @@
 /*!*
  * Smooth Scroll
- * Version 1.0.0
+ * Version 1.0.1
  * Copyright (c) 2012 Hideki Abe
  *
  * Licensed under the MIT.
@@ -68,6 +68,8 @@
             this.dest = this.targetElem.offsetTop;
             if (documentHeight - viewportHeight < this.dest) {
                 this.dest = documentHeight - viewportHeight;
+            } else if (this.dest === 0) {
+                this.dest = 1;
             }
             this.direction = (this.dest - this.start > 0) ? "down" : "up";
             this.doScroll();
@@ -77,8 +79,8 @@
             var moveY;
             if (this.direction === "up" && this.start > this.dest) {
                 moveY = Math.floor(this.start - (this.start - this.dest) / this.v - 1);
-                if (moveY < 1) {
-                    moveY = 0;
+                if (moveY <= 1) {
+                    moveY = 1;
                 }
             } else if (this.direction === "down" && this.dest > this.start) {
                 moveY = Math.ceil(this.start + (this.dest - this.start) / this.v + 1);
