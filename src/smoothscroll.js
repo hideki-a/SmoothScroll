@@ -46,14 +46,14 @@
             excludeCond: /\#tab_/,
             v: 20    // The value which influences speed.
         };
-        this.setOptions.call(this, options);
+        SmoothScroll.prototype.setOptions.call(this, options);
     }
 
     SmoothScroll.prototype = {
         setOptions: function (options) {
             var opt;
             for (opt in options) {
-                if (this.options.hasOwnProperty(opt)) {
+                if (options.hasOwnProperty(opt)) {
                     this.options[opt] = options[opt];
                 }
             }
