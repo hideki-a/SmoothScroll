@@ -39,22 +39,34 @@
         };
     }
 
-    function SmoothScroll(elem) {
+    function SmoothScroll(elem, options) {
         this.elem = elem;
-        this.excludeCond = /\#tab_/;
         this.targetId = null;
         this.targetElem = null;
         this.start = 0;
         this.dest = 0;
         this.direction = null;
-        this.v = 20;    // The value which influences speed.
+        this.options = {
+            excludeCond: /\#tab_/,
+            v: 20    // The value which influences speed.
+        };
+        this.setOptions.call(this, options);
     }
 
     SmoothScroll.prototype = {
+        setOptions: function (options) {
+            var opt;
+            for (opt in options) {
+                if (this.options.hasOwnProperty(opt)) {
+                    this.options[opt] = options[opt];
+                }
+            }
+        },
+
         init: function () {
             this.targetId = this.elem.getAttribute("href").replace(/(https?:\/\/[a-zA-Z0-9\.%\/]+)?\#/, "");
             this.targetElem = document.getElementById(this.targetId);
-            if (!this.excludeCond.test(this.targetId) && this.targetElem) {
+            if (!this.options.excludeCond.test(this.targetId) && this.targetElem) {
                 addEvent(this.elem, "click", proxy(this, function (e) {
                     if (e.preventDefault) {
                         e.preventDefault();
@@ -83,12 +95,12 @@
         doScroll: function () {
             var moveY;
             if (this.direction === "up" && this.start > this.dest) {
-                moveY = Math.floor(this.start - (this.start - this.dest) / this.v - 1);
+                moveY = Math.floor(this.start - (this.start - this.dest) / this.options.v - 1);
                 if (moveY <= 1) {
                     moveY = 1;
                 }
             } else if (this.direction === "down" && this.dest > this.start) {
-                moveY = Math.ceil(this.start + (this.dest - this.start) / this.v + 1);
+                moveY = Math.ceil(this.start + (this.dest - this.start) / this.options.v + 1);
             } else {
                 return;
             }
