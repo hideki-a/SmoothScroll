@@ -29,12 +29,8 @@
         }
     }
 
-    function proxy(obj, fn, args) {
-        if (!args) {
-            args = [null];
-        }
+    function proxy(obj, fn) {
         return function () {
-            Array.prototype.push.apply(arguments, args);    // See Also http://d.hatena.ne.jp/amachang/20070810/1186779289
             fn.apply(obj, arguments);
         };
     }
