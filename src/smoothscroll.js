@@ -48,7 +48,7 @@
         this.dest = 0;
         this.direction = null;
         this.options = {
-            excludeCond: /\#tab_/,
+            excludeCond: /tab_/,
             v: 20    // The value which influences speed.
         };
         SmoothScroll.prototype.setOptions.call(this, options);
