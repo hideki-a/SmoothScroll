@@ -1,7 +1,7 @@
-/*!*
+/*
  * Smooth Scroll
- * Version 1.0.4
- * Copyright (c) 2012 Hideki Abe
+ * Version 1.0.6
+ * Copyright (c) 2013 Hideki Abe
  *
  * Licensed under the MIT.
  */

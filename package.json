@@ -1,7 +1,7 @@
 {
   "name": "SmoothScroll",
   "author": "Hideki Abe",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "license": "Licensed under the MIT.",
   "devDependencies": {
     "grunt": "~0.4.1",
