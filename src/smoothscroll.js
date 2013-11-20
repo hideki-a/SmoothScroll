@@ -9,6 +9,11 @@
 (function (window, document) {
     "use strict";
     var stack = [];
+    window.requestAnimationFrame = window.requestAnimationFrame || 
+                                    window.webkitRequestAnimationFrame || 
+                                    function (callback) {
+                                        window.setTimeout(callback, 17);
+                                    };
 
     function addEvent(elem, type, listener, useCapture) {
         if (elem.addEventListener) {
@@ -102,7 +107,7 @@
             }
             window.scrollTo(0, moveY);
             this.start = moveY;
-            setTimeout(proxy(this, this.doScroll), 20);
+            window.requestAnimationFrame(proxy(this, this.doScroll));
         }
     };
 
